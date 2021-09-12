@@ -6,7 +6,9 @@ app = Flask(__name__)
 api = Api(app)
 
 devices = [Arduino('COM4')]
-
+@app.route("/")
+def home():
+    return render_template("home.html")
 class DeviceList(Resource):    
     def get(self):
         """Gives a list of all devices and their dimensions"""

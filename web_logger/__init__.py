@@ -9,6 +9,7 @@ devices = [Arduino('COM4')]
 @app.route("/")
 def home():
     return render_template("home.html")
+
 class DeviceList(Resource):    
     def get(self):
         """Gives a list of all devices and their dimensions"""
@@ -22,6 +23,10 @@ class DeviceDims(Resource):
         """Gives dimensions and current values for device by id (index of devices list)"""
         return devices[id].get_current_value()
 
+class DeviceUnits(Resource):
+    def get(self, id):
+        return devices[id].get_units()
+
 class TimeSeries(Resource):
     def get(self, id, n):
         return devices[id].get_time_series(n)
@@ -29,6 +34,7 @@ class TimeSeries(Resource):
 
 api.add_resource(DeviceList, '/Devices')
 api.add_resource(DeviceDims, '/Devices/<int:id>')
+api.add_resource(DeviceUnits, '/Devices/<int:id>/units')
 api.add_resource(TimeSeries, '/Devices/<int:id>/n=<int:n>')
 
 if __name__ == "__main__":

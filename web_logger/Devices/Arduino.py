@@ -12,6 +12,8 @@ class Arduino(IDevice):
         self.sio = io.TextIOWrapper(io.BufferedRWPair(self.con, self.con))
         time.sleep(3)
         self.dimensions = {"Humidity": -1, "Temperature" : -999}
+        self.units = {"Humidity": '%', "Temperature": '*C'}
+        
         polling_thread = threading.Thread(target=self.poll, args=(poll_period,))
         polling_thread.daemon = True
         polling_thread.start()

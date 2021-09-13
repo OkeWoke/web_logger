@@ -5,7 +5,7 @@ from .Devices.Arduino import Arduino
 app = Flask(__name__)
 api = Api(app)
 
-devices = [Arduino('COM4')]
+devices = [Arduino('/dev/ttyUSB0')]
 @app.route("/")
 def home():
     return render_template("home.html")

@@ -92,6 +92,11 @@ function graph_render(data)
     });
 }
 
+function subHead_render()
+{
+    const date = new Date();
+    document.getElementById('subheader').innerHTML = "The stats in my room as of: " + date.toString();
+}
 
 function list_request()
 {
@@ -114,8 +119,10 @@ function graph_request()
 
 list_request();
 graph_request();
+subHead_render();
 
 var intervalId = setInterval(function() {
     list_request()
+    subHead_render();
   }, 20000);
 

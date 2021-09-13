@@ -99,9 +99,9 @@ function subHead_render()
 }
 function list_request()
 {
-    GET("https://127.0.0.1:5000/Devices/0").then( function(result)
+    GET("https://stats.okewoke.com/Devices/0").then( function(result)
     {
-        GET("https://127.0.0.1:5000/Devices/0/units").then(function(unit_result)
+        GET("https://stats.okewoke.com/Devices/0/units").then(function(unit_result)
         {
             list_render(result, unit_result);
         });
@@ -123,6 +123,5 @@ subHead_render();
 var intervalId = setInterval(function() {
     list_request();
     subHead_render();
-    graph_request();
   }, 20000);
 

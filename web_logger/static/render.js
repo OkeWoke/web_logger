@@ -110,7 +110,7 @@ function list_request()
 
 function graph_request()
 {
-    GET("https://stats.okewoke.com/Devices/0/n=500").then( function(result)
+    GET("https://stats.okewoke.com/Devices/0/n=8640").then( function(result)
     {
         return graph_render(result);
     });

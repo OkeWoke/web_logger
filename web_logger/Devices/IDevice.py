@@ -1,23 +1,22 @@
 import abc
 import time
 import os
+import timeit
 
 def reverse_file_read(filename):
-    with open(filename, 'r') as f:
-        f.seek(0, os.SEEK_END)
+    with open(filename, 'rb') as f:
+        line_length = len(f.readline())
+        f.seek(-line_length, os.SEEK_END)
+        yield f.readline()
         index = f.tell()
-        line = ''
-        
-        while index >=0:
+
+        while True:
+            index = f.tell()
+            index -= 2*line_length
+            if index <0:
+                break
             f.seek(index)
-            next_char = f.read(1)
-            if next_char == "\n" and line!='' and line!='\n':
-                yield line[::-1]
-                line = ''
-            else:
-                line += next_char
-            index -= 1
-        yield line[::-1]
+            yield f.readline()
 
 class IDevice(metaclass=abc.ABCMeta):
     def __init__(self):
@@ -43,10 +42,11 @@ class IDevice(metaclass=abc.ABCMeta):
             iter = reverse_file_read("{0}_{1}.log".format(self.name, col))
             for i in range(n):
                 try:
-                    val = next(iter)
+                    val = next(iter).decode()
                 except StopIteration:
                     break
                 time_series[col].append(val)
+
         return time_series
 
     def log(self):

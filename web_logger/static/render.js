@@ -97,7 +97,6 @@ function subHead_render()
     const date = new Date();
     document.getElementById('subheader').innerHTML = "The stats in my room as of: " + date.toString();
 }
-
 function list_request()
 {
     GET("http://127.0.0.1:5000/Devices/0").then( function(result)
@@ -111,7 +110,7 @@ function list_request()
 
 function graph_request()
 {
-    GET("http://127.0.0.1:5000/Devices/0/n=8640").then( function(result)
+    GET("http://127.0.0.1:5000/Devices/0/n=500").then( function(result)
     {
         return graph_render(result);
     });
@@ -122,7 +121,7 @@ graph_request();
 subHead_render();
 
 var intervalId = setInterval(function() {
-    list_request()
+    list_request();
     subHead_render();
   }, 20000);
 

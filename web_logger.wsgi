@@ -3,7 +3,7 @@ import sys
 import logging
 import os
 
-logging.basicConfig(format='%(asctime)s %(message)s', filename='stats.okewoke.com.log', level=logging.DEBUG)
+logging.basicConfig(stream=sys.stderr, format='%(asctime)s %(message)s', level=logging.DEBUG)
 os.chdir("/var/www/web_logger")
 sys.path.insert(0,"/var/www/web_logger/")
 

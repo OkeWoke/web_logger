@@ -25,6 +25,7 @@ class IDevice(metaclass=abc.ABCMeta):
         self.name = ""
         self.dimensions = {}
         self.units = {}
+        self.available = False
 
     def get_dimensions(self):
         return sorted(self.dimensions.keys())
@@ -67,4 +68,9 @@ class IDevice(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def poll(self):
         """Implementation should internally update dimensions dict with this function, perhaps setup on a thread/periodically..."""
+        pass
+
+    @abc.abstractmethod
+    def reconnect(self):
+        """Should endlessly try to reconnect to device..."""
         pass

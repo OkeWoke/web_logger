@@ -2,6 +2,7 @@ import abc
 import time
 import os
 import timeit
+import logging
 
 def reverse_file_read(filename):
     with open(filename, 'rb') as f:
@@ -17,6 +18,7 @@ def reverse_file_read(filename):
                 break
             f.seek(index)
             yield f.readline()
+  
 
 class IDevice(metaclass=abc.ABCMeta):
     def __init__(self):
@@ -43,8 +45,10 @@ class IDevice(metaclass=abc.ABCMeta):
             for i in range(n):
                 try:
                     val = next(iter).decode()
-                except StopIteration:
+                except (StopIteration, FileNotFoundError) as e:
+                    logging.warning(e)
                     break
+              
                 time_series[col].append(val)
 
         return time_series

@@ -1,11 +1,14 @@
 from flask import Flask, jsonify, Response, url_for, send_from_directory, render_template, Markup, make_response, request, Blueprint
 from flask_restful import Api, Resource, reqparse
 from .Devices.Arduino import Arduino
+import logging
 
 app = Flask(__name__)
 api = Api(app)
 
 devices = [Arduino('/dev/ttyUSB0')]
+logging.info("Added arduino to device list")
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -38,4 +41,5 @@ api.add_resource(DeviceUnits, '/Devices/<int:id>/units')
 api.add_resource(TimeSeries, '/Devices/<int:id>/n=<int:n>')
 
 if __name__ == "__main__":
+    logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
     app.run()

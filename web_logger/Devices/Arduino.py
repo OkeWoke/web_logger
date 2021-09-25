@@ -1,22 +1,26 @@
-from .IDevice import IDevice
+from IDevice import IDevice
 import serial
 import time
 import threading
 import io
+import logging
 
 class Arduino(IDevice):
     def __init__(self, port, name="Arduino", poll_period=10):
+        logging.info("Initialised arduino")
         super().__init__()
         self.name = name
         self.con = serial.Serial(port, timeout=1)
         self.sio = io.TextIOWrapper(io.BufferedRWPair(self.con, self.con))
         time.sleep(3)
+        logging.info("Arduino Connected")
         self.dimensions = {"Humidity": -1, "Temperature" : -999}
         self.units = {"Humidity": '%', "Temperature": '*C'}
         
         polling_thread = threading.Thread(target=self.poll, args=(poll_period,))
         polling_thread.daemon = True
         polling_thread.start()
+        logging.info("Polling thread started")
 
     def com(self, msg):
         self.sio.write(str(msg))
@@ -35,5 +39,6 @@ class Arduino(IDevice):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
     ard = Arduino('COM4')
     print(ard.get_time_series(3))

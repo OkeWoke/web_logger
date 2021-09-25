@@ -5,7 +5,7 @@ import logging
 import asyncio
 app = Flask(__name__)
 api = Api(app)
-
+logging.basicConfig(format='%(asctime)s %(message)s', filename='stats.okewoke.com.log', level=logging.DEBUG)
 devices = []
 logging.info("Added arduino to device list")
 

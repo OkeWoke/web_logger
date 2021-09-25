@@ -2,11 +2,11 @@ from flask import Flask, jsonify, Response, url_for, send_from_directory, render
 from flask_restful import Api, Resource, reqparse
 from .Devices.Arduino import Arduino
 import logging
-
+import asyncio
 app = Flask(__name__)
 api = Api(app)
 
-devices = [Arduino('/dev/ttyUSB0')]
+devices = []
 logging.info("Added arduino to device list")
 
 @app.route("/")

@@ -1,7 +1,6 @@
 import abc
 import time
 import os
-import timeit
 import logging
 
 def reverse_file_read(filename):

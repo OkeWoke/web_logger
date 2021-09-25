@@ -1,5 +1,5 @@
 from serial.serialutil import SerialException
-from IDevice import IDevice
+from .IDevice import IDevice
 import serial
 import time
 import threading

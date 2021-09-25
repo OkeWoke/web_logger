@@ -16,7 +16,8 @@ class Arduino(IDevice):
         self.dimensions = {"Humidity": -1, "Temperature" : -999}
         self.units = {"Humidity": '%', "Temperature": '*C'}
 
-        self.reconnect() #Do require device to be connected physically initally...
+        initial_con_thread = threading.Thread(target=self.reconnect)
+        initial_con_thread.start()
         
 
     def com(self, msg):

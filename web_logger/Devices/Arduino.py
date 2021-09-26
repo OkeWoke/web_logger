@@ -55,7 +55,7 @@ class Arduino(IDevice):
                 self.sio = io.TextIOWrapper(io.BufferedRWPair(self.con, self.con))
                 break
             except SerialException as e:
-                logging.warning('Unable to connect to arduino')
+                logging.warning('Unable to connect to arduino\n{0}'.format(e))
                 time.sleep(10)
         time.sleep(3)
         logging.info("Arduino reconnected")

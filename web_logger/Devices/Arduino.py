@@ -38,6 +38,7 @@ class Arduino(IDevice):
         except SerialException as e:
             logging.error(e)
             self.available = False
+            self.con.close()
             self.reconnect()
 
     def poll_thread(self, poll_period):
@@ -50,6 +51,7 @@ class Arduino(IDevice):
         while True:
             try:
                 self.con = serial.Serial(self.port, timeout=1)
+                self.con.open()
                 self.sio = io.TextIOWrapper(io.BufferedRWPair(self.con, self.con))
                 break
             except SerialException as e:

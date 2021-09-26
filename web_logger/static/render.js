@@ -94,9 +94,13 @@ function graph_render(data)
 
 function subHead_render()
 {
-    const date = new Date();
-    document.getElementById('subheader').innerHTML = "The stats in my room as of: " + date.toString();
+    GET("https://stats.okewoke.com/Devices/0/n=1").then(function(result)
+    {
+        const date = new Date(JSON.parse(result).Temperature[0].split(',')[0]);
+        document.getElementById('subheader').innerHTML = "The stats in my room as of: " + date.toString();
+    });
 }
+
 function list_request()
 {
     GET("https://stats.okewoke.com/Devices/0").then( function(result)

@@ -55,9 +55,9 @@ class Arduino(IDevice):
                 self.sio = io.TextIOWrapper(io.BufferedRWPair(self.con, self.con))
                 break
             except SerialException as e:
-                if "[Errno 2] No such file or directory: '/dev/ttyUSB0'" in e:
+                if "[Errno 2] No such file or directory: '/dev/ttyUSB0'" in str(e):
                     self.port = '/dev/ttyUSB1'
-                elif "[Errno 2] No such file or directory: '/dev/ttyUSB1'" in e:
+                elif "[Errno 2] No such file or directory: '/dev/ttyUSB1'" in str(e):
                     self.port = '/dev/ttyUSB0'
                 logging.warning('Unable to connect to arduino\n{0}'.format(e))
                 time.sleep(10)

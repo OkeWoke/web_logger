@@ -32,7 +32,7 @@ class Arduino(IDevice):
             while True:
                 self.dimensions["Humidity"]  = self.com('h')
                 self.dimensions["Temperature"]  = self.com('t')
-                self.dimensions["Preassure"] = self.com('p')
+                self.dimensions["Pressure"] = self.com('p')
                 self.log()
                 sleep_time+=poll_period
                 time.sleep(sleep_time - time.time())

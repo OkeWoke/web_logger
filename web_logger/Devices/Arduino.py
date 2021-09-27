@@ -13,8 +13,8 @@ class Arduino(IDevice):
         self.name = name
         self.port = port
         self.poll_period = poll_period
-        self.dimensions = {"Humidity": -1, "Temperature" : -999, "Pressure" : -1}
-        self.units = {"Humidity": '%', "Temperature": '*C', "Pressure": "Pa"}
+        self.dimensions = {"Humidity": -1, "Temperature" : -999, "Pressure" : -1, "Distance": -1}
+        self.units = {"Humidity": '%', "Temperature": '*C', "Pressure": "Pa", "Distance": "cm"}
 
         initial_con_thread = threading.Thread(target=self.reconnect)
         initial_con_thread.start()
@@ -33,6 +33,7 @@ class Arduino(IDevice):
                 self.dimensions["Humidity"]  = self.com('h')
                 self.dimensions["Temperature"]  = self.com('t')
                 self.dimensions["Pressure"] = self.com('p')
+                self.dimensions["Distance"] = self.com('d')
                 self.log()
                 sleep_time+=poll_period
                 time.sleep(sleep_time - time.time())

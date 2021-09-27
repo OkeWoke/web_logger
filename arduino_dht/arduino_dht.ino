@@ -14,6 +14,10 @@ Adafruit_BMP280 bmp; // I2C
 #define DHTPIN 7     // what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
+
+const int pingPin = 6; // Trigger Pin of Ultrasonic Sensor
+const int echoPin = 5; // Echo Pin of Ultrasonic Sensor
+long cm;
 char in_char;
 
 void setup()
@@ -32,7 +36,16 @@ void setup()
 
 void loop()
 {
-
+   pinMode(pingPin, OUTPUT);
+   digitalWrite(pingPin, LOW);
+   delayMicroseconds(2);
+   digitalWrite(pingPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(pingPin, LOW);
+   pinMode(echoPin, INPUT);
+   long duration = pulseIn(echoPin, HIGH);
+   cm = duration / 29 / 2;
+   delay(100);
 }
 
 void serialEvent()
@@ -51,5 +64,8 @@ void serialEvent()
   }else if(in_char == 'k')
   {
     Serial.println(bmp.readTemperature());
+  }else if(in_char == 'd')
+  {
+    Serial.println(cm);
   }
 }

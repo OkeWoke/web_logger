@@ -13,7 +13,7 @@ class Arduino(IDevice):
         self.name = name
         self.port = port
         self.poll_period = poll_period
-        self.dimensions = {"Humidity": -1, "Temperature" : -999, "Presssure" : -1}
+        self.dimensions = {"Humidity": -1, "Temperature" : -999, "Pressure" : -1}
         self.units = {"Humidity": '%', "Temperature": '*C', "Pressure": "Pa"}
 
         initial_con_thread = threading.Thread(target=self.reconnect)

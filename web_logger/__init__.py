@@ -1,15 +1,16 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
 from .Devices.Arduino import Arduino
+from fastapi.templating import Jinja2Templates
 import logging
-app = FastAPI
 
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 devices = [Arduino('/dev/ttyUSB0')]
 logging.info("Added arduino to device list")
 
 @app.get("/")
-def home():
-    return FileResponse("home.html")
+def home(request: Request):
+    return templates.TemplateResponse("home.html",{"request": request})
 
 @app.get("/Devices")
 def ListDevices():
@@ -20,7 +21,7 @@ def ListDevices():
     return {'Devices': device_dim}
 
 @app.get("/Devices/{device_id}")
-def ListDeviceIDs(device_id: int):
+def ListDeviceDims(device_id: int):
     """Gives dimensions and current values for device by id (index of devices list)"""
     return devices[device_id].get_current_value()
 

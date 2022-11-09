@@ -38,4 +38,5 @@ def TimeSeries(device_id: int, n : int):
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
-    app.run()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=6969)
